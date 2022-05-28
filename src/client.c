@@ -59,7 +59,7 @@ int main(void)
     user_input[INPUT_BUFFER_SIZE - 1] = '\0'; // add string termination to user input
     send(socketfd, user_input, strlen(user_input), 0); // send the user input to the server
 
-    if(strcmp("exit",user_input) == 0){
+    if(strcmp("exit",user_input) == 0){ // we check if we receive exit command from the user input to we exit the process clean
         printf("exit command received");
         exit(0);
     }

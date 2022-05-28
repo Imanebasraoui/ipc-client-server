@@ -70,7 +70,7 @@ int main()
     
     printf("the input from client is %s\n",input);
 
-    if(strcmp("exit",input)  == 0){
+    if(strcmp("exit",input)  == 0){  // check if the user input is exit so we quit the program clean
         printf("exit command received");
         exit(0);
     }
