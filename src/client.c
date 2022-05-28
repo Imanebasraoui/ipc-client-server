@@ -51,14 +51,21 @@ int main(void)
 
   // we are connected to the server, now we can start listening for user input and sending it to the server
   while (client_alive) {
-
     char user_input[INPUT_BUFFER_SIZE]; // buffer for user input
     char server_response[OUTPUT_BUFFER_SIZE]; // buffer for server response
 
     printf("Hi what's your name ?\n");
-    scanf("%64s",user_input,INPUT_BUFFER_SIZE); // scanf we put the user input into the user_input buffer (%64s) means the user can input max 64 characters
+    scanf("%63s",user_input,INPUT_BUFFER_SIZE); // scanf we put the user input into the user_input buffer (%64s) means the user can input max 64 characters
+    user_input[INPUT_BUFFER_SIZE - 1] = '\0'; // add string termination to user input
     send(socketfd, user_input, strlen(user_input), 0); // send the user input to the server
+
+    if(strcmp("exit",user_input) == 0){
+        printf("exit command received");
+        exit(0);
+    }
+
     int read_value = recv(socketfd, server_response, OUTPUT_BUFFER_SIZE,0); // read the server response into the server_response buffer
+    server_response[read_value] = '\0'; // we terminate the string
     printf("%s\n", server_response); // print the server response
   }
 

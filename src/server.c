@@ -63,19 +63,23 @@ int main()
 
     char input[INPUT_BUFFER_SIZE];  // we prepare a buffer for user input of the size of INPUT_BUFFER_SIZE 
     char output[OUTPUT_BUFFER_SIZE]; // we prepare a buffer for server response of the size of OUTPUT_BUFFER_SIZE
-
+    
     int read_result = recv(new_connection, input, INPUT_BUFFER_SIZE,0);    // we read the input from the client
-
     check_result(read_result,"Socket read failed\n"); // we check if the read was successful
-
+    input[read_result] = '\0';  // we terminate the string
+    
     printf("the input from client is %s\n",input);
+
+    if(strcmp("exit",input)  == 0){
+        printf("exit command received");
+        exit(0);
+    }
 
     strcpy(output, "Hello "); // we prepare the first part of the output message
     strcat(output, input); // we append the input to the output message
     strcat(output, "!\n"); // we append the ending to the ouput message
 
     printf("the output from server is %s\n",output);
-
     send(new_connection, output, strlen(output), 0);   // we send the output to the client
   }
   return 0;
